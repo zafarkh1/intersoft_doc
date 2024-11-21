@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import Layout from "./component/Layout";
+import Home from "./pages/Home";
+import Answer from "./component/Answer/Answer";
+import Login from "./pages/Login";
+import Choose from "./pages/Choose";
+import { useAuth } from "./component/provider/AuthContext";
 
 function App() {
+  const { isAuthenticated } = useAuth();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      {isAuthenticated && <Route path="/choose" element={<Choose />} />}
+      <Route path="/" element={isAuthenticated ? <Layout /> : <Login />}>
+        <Route index element={<Home />} />
+        <Route element={<Answer />} path="/:slug" />
+      </Route>
+    </Routes>
   );
 }
 
