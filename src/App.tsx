@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Answer from "./component/Answer/Answer";
 import Login from "./pages/Login";
 import Choose from "./pages/Choose";
+import Contact from "./pages/Contact";
 import { useAuth } from "./component/provider/AuthContext";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" element={isAuthenticated ? <Layout /> : <Login />}>
         <Route index element={<Home />} />
         <Route element={<Answer />} path="/:slug" />
+        <Route element={<Contact />} path="/contact" />
       </Route>
     </Routes>
   );

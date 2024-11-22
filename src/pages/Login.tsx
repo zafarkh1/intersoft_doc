@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/images/logo_footer.png";
 import LoginBg from "../assets/images/login_bg.png";
 import { useAuth } from "../component/provider/AuthContext";
@@ -49,9 +49,9 @@ const Login = () => {
     <div className="lg:h-screen lg:px-8 py-8 mx-auto flex lg:flex-row flex-col lg:items-stretch items-center">
       <div className="lg:w-1/2 relative lg:px-0 px-10">
         {/* Logo */}
-        <a href="/" className="">
+        <Link to="/" className="">
           <img src={Logo} alt="logo" />
-        </a>
+        </Link>
 
         {/* Form content */}
         <div className="lg:mt-0 mt-20 lg:absolute top-1/2 left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 w-fit">

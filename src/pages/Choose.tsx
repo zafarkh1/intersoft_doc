@@ -11,19 +11,19 @@ const Choose = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center lg:px-24">
-      <h5 className="heading5 font-semibold">Выберите компанию</h5>
-      <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1 lg:gap-8 gap-4 lg:mt-16 mt-8">
+    <div className="h-screen flex flex-col items-cente justify-center lg:px-24 px-10">
+      <h5 className="heading5 font-semibold text-center">Выберите компанию</h5>
+      <div className="flex flex-wrap items-center md:justify-start justify-center gap-8 lg:mt-16 mt-8">
         {projects?.map((project) => (
           <div
             key={project.id}
-            className="cursor-pointer"
+            className="cursor-pointer w-80"
             onClick={() => handleStoreLocalStorage(project.slug)}
           >
             <img
               src={project.picture.large}
               alt={project.name}
-              className="w-80 lg:h-44 h-24 rounded-xl"
+              className="w-80 h-44 rounded-xl"
             />
           </div>
         ))}

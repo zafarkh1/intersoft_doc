@@ -29,17 +29,11 @@ interface BlockType {
   type: string;
 }
 
-interface DescriptionType {
-  time: number;
-  blocks: BlockType[];
-  version: string;
-}
-
 interface QuestionDetailType {
   id: number;
   title: string;
   slug: string;
-  description: DescriptionType;
+  description: any;
 }
 
 // Project Interfaces

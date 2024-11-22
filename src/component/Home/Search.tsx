@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { IconClose, IconSearch } from "../../assets/icons/icons";
-import { data } from "../../api/Accordion";
 import useData from "../hook/useData";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [isFocused, setIsFocused] = useState(false);
-  const searchRef = useRef<HTMLDivElement | null>(null);
   const [value, setValue] = useState<string>("");
+  const searchRef = useRef<HTMLDivElement | null>(null);
+
   const { accordionQuestions } = useData({ slug: "" });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -46,12 +48,16 @@ const Search = () => {
               className="w-full outline-none md:text-lg text-sm"
               onFocus={() => setIsFocused(true)}
               onChange={(e) => setValue(e.target.value)}
+              value={value ? value : ""}
             />
           </div>
           {isFocused && (
             <IconClose
               className="size-6 cursor-pointer"
-              onClick={() => setIsFocused(false)}
+              onClick={() => {
+                setIsFocused(false);
+                setValue("");
+              }}
             />
           )}
         </div>
@@ -68,11 +74,12 @@ const Search = () => {
               item?.filtered_questions?.map((item, index, arr) => (
                 <div
                   key={index}
-                  className={`p-[18px] transition-all duration-500 border-b border-b-[#E0E0E0]`}
+                  className={`md:p-[18px] p-2 transition-all duration-500 border-b border-b-[#E0E0E0]`}
                 >
                   <span
                     className="cursor-pointer transition-all duration-500 hover:bg-clip-text
                   hover:bg-gradient-to-r from-[#092880] to-[#03051B] hover:underline"
+                    onClick={() => navigate(`/${item.slug}`)}
                   >
                     {item.title}
                   </span>
@@ -100,6 +107,7 @@ const Search = () => {
                     <span
                       className="cursor-pointer transition-all duration-500 hover:bg-clip-text
                 hover:bg-gradient-to-r from-[#092880] to-[#03051B] hover:underline"
+                      onClick={() => navigate(`/${item.slug}`)}
                     >
                       {item.title}
                     </span>
@@ -111,13 +119,14 @@ const Search = () => {
 
       {/* Popular questions */}
       {!isFocused && (
-        <div className="text mt-4 lg:w-[720px] mx-auto space-x-2 md:text-left text-center md:line-clamp-none line-clamp-3">
+        <div className="text mt-4 lg:w-[720px] mx-auto space-x-2 md:text-left text-center md:line-clamp-2 line-clamp-3">
           <span>Популярные вопросы:</span>{" "}
           {accordionQuestions?.map((item) =>
-            item?.filtered_questions?.slice(0, 1).map((item, index, arr) => (
+            item?.filtered_questions?.map((item, index) => (
               <span
-                className="underline underline-offset-4 text-[#757373]"
                 key={index}
+                className="underline underline-offset-4 text-[#757373] cursor-pointer"
+                onClick={() => navigate(`/${item.slug}`)}
               >
                 {" "}
                 {item.title}

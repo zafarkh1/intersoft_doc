@@ -30,7 +30,7 @@ const MyAccordion = () => {
       </div>
 
       {/* Accordion */}
-      <div className="lg:w-[900px] rounded-xl border border-[#EAECF0] lg:my-16 my-8 font-semibold">
+      <div className="lg:w-[900px] rounded-xl border border-[#EAECF0] lg:my-16 mt-8 mb-10 font-semibold overflow-hidden">
         {accordionQuestions?.map((item) => (
           <Accordion
             key={item.id}
@@ -56,21 +56,21 @@ const MyAccordion = () => {
                 },
               }}
             >
-              <div className="w-full flex items-center justify-between gap-4 py-2">
+              <div className="w-full flex items-center justify-between gap-4 md:py-2">
                 <div className="flexICenter gap-3">
                   <img src={item.icon} alt={item.title} className="h-8 w-8" />
-                  <p>{item.title}</p>
+                  <p className="text">{item.title}</p>
                 </div>
                 {/* Conditionally render the appropriate icon */}
                 {expanded === item.id ? (
                   <IconDropdownTopLarge
-                    className="size-6"
+                    className="md:size-6 size-5"
                     color="#242222"
                     weight={2}
                   />
                 ) : (
                   <IconDropdownBottomLarge
-                    className="size-6"
+                    className="md:size-6 size-5"
                     color="#242222"
                     weight={2}
                   />
@@ -86,15 +86,15 @@ const MyAccordion = () => {
                     py-2 group transition-all duration-500"
                     onClick={() => navigate(`/${item.slug}`)}
                   >
-                    <div className="flex items-center ml-4">
-                      <span className="mr-2">
+                    <div className="flex ml-4">
+                      <span className="mr-1">
                         {String(index + 1).padStart(2, "0")}.
                       </span>
                       {item.title}
                     </div>
 
                     <span className="hidden group-hover:inline-block">
-                      <IconArrowRight className="size-6" />
+                      <IconArrowRight className="md:size-6 size-5" />
                     </span>
                   </li>
                 ))}
@@ -112,6 +112,7 @@ const MyAccordion = () => {
           style={{
             background: "linear-gradient(90deg, #092880 0%, #03051B 100%)",
           }}
+          onClick={() => navigate("/contact")}
         >
           Связаться с нами
         </button>

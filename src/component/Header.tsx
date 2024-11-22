@@ -12,6 +12,14 @@ import Profile from "../assets/images/Avatars.svg";
 import { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import useData from "./hook/useData";
+import { useTranslation } from "react-i18next";
+import { useLangStore } from "./hook/useLangStore";
+
+const languages = [
+  { id: 1, title: "Англиский" },
+  { id: 2, title: "Узбекский" },
+  { id: 3, title: "Русский" },
+];
 
 const Header = () => {
   const [isLogout, setIsLogout] = useState(false);
@@ -19,9 +27,11 @@ const Header = () => {
   const [selectedProject, setSelectedProject] = useState<string | null>(
     localStorage.getItem("selectedCategory")?.replace(/^"|"$/g, "") || null
   );
-
   const logoutDropdownRef = useRef<HTMLDivElement>(null);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
+
+  const { i18n, t } = useTranslation();
+  const { setCurrentLanguage } = useLangStore();
 
   const { projects } = useData({ slug: "" });
   const navigate = useNavigate();
@@ -56,14 +66,14 @@ const Header = () => {
     return null;
   }
 
-  const capitalizeProjectNames = (projects: { name: string }[]) => {
-    return projects.map((project) => ({
-      ...project,
-      name: project.name.charAt(0).toUpperCase() + project.name.slice(1),
-    }));
-  };
+  // const capitalizeProjectNames = (projects: { name: string }[]) => {
+  //   return projects.map((project) => ({
+  //     ...project,
+  //     name: project.name.charAt(0).toUpperCase() + project.name.slice(1),
+  //   }));
+  // };
 
-  const updatedProjects = capitalizeProjectNames(projects);
+  // const updatedProjects = capitalizeProjectNames(projects);
 
   const handleProjectChange = (slug: string) => {
     localStorage.setItem("selectedCategory", JSON.stringify(slug));
@@ -79,16 +89,28 @@ const Header = () => {
     navigate("/login");
   };
 
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang);
+    setCurrentLanguage(lang);
+  };
+
   return (
     <header className="myContainer lg:mt-8 mt-7">
-      <div className="flex justify-between items-center shadow-md shadow-black/10 rounded-2xl lg:py-4 lg:px-14 p-3  border border-[#F5F5F5]">
+      <div className="flex justify-between items-center shadow-md shadow-black/10 rounded-2xl lg:py-4 lg:px-14 p-3 border border-[#F5F5F5]">
         {/* Language */}
-        <div className="md:inline-block hidden">
-          <button className="navbarBtn ">
-            <IconLanguage className="size-4" />
-            <span className="">Русский</span>
-            <IconDropdownDownSmall className="size-3 fill-primary" />
-          </button>
+        <div className="md:flex items-center border boder-[#f0f0f0] px-4 py-2 rounded-[10px] bg-[#fafafa] hidden">
+          <IconLanguage className="size-4" />
+
+          {languages.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleLanguageChange(item.title)}
+              className=""
+            >
+              <span className="">{item.title}</span>
+            </button>
+          ))}
+          <IconDropdownDownSmall className="size-3 fill-primary" />
         </div>
 
         <div className="md:hidden inline-block">
@@ -101,7 +123,7 @@ const Header = () => {
           className="flex-shrink-0 mx-auto text-center flex-1 lg:flex-none lg:mx-0"
         >
           <img src={Logo} alt="logo" className="md:inline-block hidden" />
-          <IconIntersoft className="md:hidden inline-block size-8 fill-[linear-gradient(90deg, #092880 0%, #03051B 100%);]" />
+          <IconIntersoft className="md:hidden inline-block size-8 fill-[linear-gradient(90deg, #092880 0%, #03051B 100%)]" />
         </a>
 
         <div className="flexICenter md:gap-1 gap-4">
