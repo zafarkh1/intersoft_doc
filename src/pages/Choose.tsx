@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import useData from "../component/hook/useData";
+import { useTranslation } from "react-i18next";
 
 const Choose = () => {
   const { projects } = useData({ slug: "" });
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleStoreLocalStorage = (slug: string) => {
     localStorage.setItem("selectedCategory", JSON.stringify(slug));
@@ -11,8 +13,10 @@ const Choose = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col items-cente justify-center lg:px-24 px-10">
-      <h5 className="heading5 font-semibold text-center">Выберите компанию</h5>
+    <div className="h-screen flex flex-col items-center justify-center lg:px-24 px-10">
+      <h5 className="heading5 font-semibold text-center">
+        {t("choose.chooseCompany")}
+      </h5>
       <div className="flex flex-wrap items-center md:justify-start justify-center gap-8 lg:mt-16 mt-8">
         {projects?.map((project) => (
           <div

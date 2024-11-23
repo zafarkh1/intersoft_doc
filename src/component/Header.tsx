@@ -13,25 +13,26 @@ import { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import useData from "./hook/useData";
 import { useTranslation } from "react-i18next";
-import { useLangStore } from "./hook/useLangStore";
-
-const languages = [
-  { id: 1, title: "Англиский" },
-  { id: 2, title: "Узбекский" },
-  { id: 3, title: "Русский" },
-];
 
 const Header = () => {
+  const { i18n, t } = useTranslation();
   const [isLogout, setIsLogout] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<string | null>(
     localStorage.getItem("selectedCategory")?.replace(/^"|"$/g, "") || null
   );
+  const [currentLang, setCurrentLang] = useState<string>(i18n.language || "en");
+
+  const languageDropdownRef = useRef<HTMLDivElement>(null);
   const logoutDropdownRef = useRef<HTMLDivElement>(null);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
 
-  const { i18n, t } = useTranslation();
-  const { setCurrentLanguage } = useLangStore();
+  const languages = [
+    { code: "en", label: t("header.languages.en") || "English" },
+    { code: "uz", label: t("header.languages.uz") || "Uzbek" },
+    { code: "ru", label: t("header.languages.ru") || "Russian" },
+  ];
 
   const { projects } = useData({ slug: "" });
   const navigate = useNavigate();
@@ -39,6 +40,13 @@ const Header = () => {
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      if (
+        languageDropdownRef.current &&
+        !languageDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsLangDropdownOpen(false);
+      }
+
       if (
         logoutDropdownRef.current &&
         !logoutDropdownRef.current.contains(event.target as Node)
@@ -89,32 +97,69 @@ const Header = () => {
     navigate("/login");
   };
 
+  // const handleLanguageChange = (lang: string) => {
+  //   i18n.changeLanguage(lang);
+  //   setCurrentLang(lang);
+  //   localStorage.setItem("i18nextLng", lang);
+  //   setIsLangDropdownOpen(false);
+  // };
+
   const handleLanguageChange = (lang: string) => {
-    i18n.changeLanguage(lang);
-    setCurrentLanguage(lang);
+    i18n
+      .changeLanguage(lang)
+      .then(() => {
+        setCurrentLang(lang);
+        localStorage.setItem("i18nextLng", lang);
+        setIsLangDropdownOpen(false);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error changing language:", error);
+      });
   };
 
   return (
     <header className="myContainer lg:mt-8 mt-7">
-      <div className="flex justify-between items-center shadow-md shadow-black/10 rounded-2xl lg:py-4 lg:px-14 p-3 border border-[#F5F5F5]">
+      <div className="flex items-center justify-between shadow-md shadow-black/10 rounded-2xl lg:py-4 lg:px-14 p-3 border border-[#F5F5F5]">
         {/* Language */}
-        <div className="md:flex items-center border boder-[#f0f0f0] px-4 py-2 rounded-[10px] bg-[#fafafa] hidden">
-          <IconLanguage className="size-4" />
 
-          {languages.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleLanguageChange(item.title)}
-              className=""
-            >
-              <span className="">{item.title}</span>
-            </button>
-          ))}
-          <IconDropdownDownSmall className="size-3 fill-primary" />
-        </div>
+        <div className="relative" ref={languageDropdownRef}>
+          <button
+            className="md:flex items-center hidden px-4 py-2 border rounded-md bg-gray-100"
+            onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+          >
+            <IconLanguage className="mr-2 size-4" />
+            <span>
+              {languages.find((lang) => lang.code === currentLang)?.label}
+            </span>
+            <IconDropdownDownSmall className="ml-2 size-3 fill-primary" />
+          </button>
 
-        <div className="md:hidden inline-block">
-          <IconLanguageMobile className="size-8" />
+          {isLangDropdownOpen && (
+            <ul className="absolute md:left-10 left-0 top-[37px] mt-2 md:text-base text-xs bg-white border border-[#EAEAEB] rounded-md shadow-md z-10">
+              {languages.map((lang) => (
+                <li
+                  key={lang.code}
+                  className={`md:px-4 px-2 md:py-[10px] py-2 cursor-pointer hover:bg-[#f5f5f5] w-full flexBetween gap-2 ${
+                    lang.code === currentLang ? "" : ""
+                  }`}
+                  onClick={() => handleLanguageChange(lang.code)}
+                >
+                  {lang.label}
+                  {lang.code === currentLang && (
+                    <IconSelect className="size-3" />
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div
+            className="md:hidden inline-block"
+            onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+          >
+            <IconLanguageMobile className="size-8" />
+          </div>
         </div>
 
         {/* Logo */}
@@ -134,7 +179,7 @@ const Header = () => {
           >
             <div className="hidden md:inline-block">
               <button
-                className="navbarBtn"
+                className="navbarBtn rounded-md"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 <span>
@@ -156,11 +201,11 @@ const Header = () => {
             </div>
 
             {isDropdownOpen && (
-              <ul className="bg-[#fafafa] border border-[#E4E4E4] md:px-1 px-0 md:py-2 py-1 rounded-xl md:text-sm text-xs absolute md:top-14 top-10 left-0 md:right-0 right-">
+              <ul className="bg-white border border-[#E4E4E4] md:text-base text-xs rounded-md absolute md:top-14 top-10 md:-left-ful">
                 {projects.map((project) => (
                   <li
                     key={project.id}
-                    className="py-1 md:px-3 px-2 hover:bg-gray-200 flexBetween gap-3 cursor-pointer"
+                    className="md:py-[10px] py-2 md:px-4 px-2 hover:bg-[#f5f5f5] flexBetween gap-3 cursor-pointer"
                     onClick={() => handleProjectChange(project.slug)}
                   >
                     {project.name}
@@ -183,10 +228,11 @@ const Header = () => {
             />
             {isLogout && (
               <button
-                className="bg-[#fafafa] border border-[#E4E4E4] md:px-2 px-0 md:py-2 py-1 rounded-xl md:text-sm text-xs absolute md:top-16 top-10 md:left-0 -left-12 md:-right-20 "
+                className="bg-[#fafafa] border border-[#E4E4E4] md:px-2 px-0 md:py-2 py-1 md:rounded-xl rounded-md md:text-base 
+                text-xs absolute md:top-16 top-10 md:right-0 md:-left-full"
                 onClick={handleLogout}
               >
-                Выйти из аккаунта
+                {t("header.logout")}
               </button>
             )}
           </div>

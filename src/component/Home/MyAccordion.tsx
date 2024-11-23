@@ -2,40 +2,40 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import {
-  IconArrowDown,
   IconArrowRight,
   IconDropdownBottomLarge,
   IconDropdownTopLarge,
 } from "../../assets/icons/icons";
 import useData from "../hook/useData";
+import HelpBtn from "./HelpBtn";
+import AccordionHeading from "./AccordionHeading";
 
 const MyAccordion = () => {
-  const [expanded, setExpanded] = useState<number | false>(false);
+  const [expandedPanels, setExpandedPanels] = useState<number[]>([]);
   const navigate = useNavigate();
   const { accordionQuestions } = useData({ slug: "" });
 
-  const handleChange =
-    (panel: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
+  const handleToggle = (panel: number) => {
+    setExpandedPanels(
+      (prevExpandedPanels) =>
+        prevExpandedPanels.includes(panel)
+          ? prevExpandedPanels.filter((id) => id !== panel) // Collapse panel
+          : [...prevExpandedPanels, panel] // Expand panel
+    );
+  };
 
   return (
     <div className="lg:mt-80 mt-40">
       {/* Text */}
-      <div className="flex flex-col items-center gap-2 lg:text-2xl text-xl">
-        <p>Статьи по теме</p>
-        <span className="">
-          <IconArrowDown className="size-6" />
-        </span>
-      </div>
+      <AccordionHeading />
 
       {/* Accordion */}
       <div className="lg:w-[900px] rounded-xl border border-[#EAECF0] lg:my-16 mt-8 mb-10 font-semibold overflow-hidden">
         {accordionQuestions?.map((item) => (
           <Accordion
             key={item.id}
-            expanded={expanded === item.id}
-            onChange={handleChange(item.id)}
+            expanded={expandedPanels.includes(item.id)}
+            onChange={() => handleToggle(item.id)}
             disableGutters
             sx={{
               boxShadow: "none",
@@ -62,7 +62,7 @@ const MyAccordion = () => {
                   <p className="text">{item.title}</p>
                 </div>
                 {/* Conditionally render the appropriate icon */}
-                {expanded === item.id ? (
+                {expandedPanels.includes(item.id) ? (
                   <IconDropdownTopLarge
                     className="md:size-6 size-5"
                     color="#242222"
@@ -78,12 +78,12 @@ const MyAccordion = () => {
               </div>
             </AccordionSummary>
             <AccordionDetails sx={{ padding: "0" }}>
-              <ol className="space-y-2">
+              <ol className="">
                 {item.filtered_questions.map((item, index) => (
                   <li
                     key={index}
                     className="font-light text hover:bg-[#09288033] cursor-pointer w-full flex justify-between items-center px-4 
-                    py-2 group transition-all duration-500"
+                    py-[10px] group transition-all duration-500"
                     onClick={() => navigate(`/${item.slug}`)}
                   >
                     <div className="flex ml-4">
@@ -93,7 +93,7 @@ const MyAccordion = () => {
                       {item.title}
                     </div>
 
-                    <span className="hidden group-hover:inline-block">
+                    <span className="opacity-0 group-hover:opacity-100 transition-all duration-500">
                       <IconArrowRight className="md:size-6 size-5" />
                     </span>
                   </li>
@@ -104,19 +104,8 @@ const MyAccordion = () => {
         ))}
       </div>
 
-      {/* Btn */}
-      <div className="text-center">
-        <h5 className="heading5 font-semibold">Нужна дополнительная помощь?</h5>
-        <button
-          className="lg:px-8 px-6 lg:py-[15px] py-2 lg:text-lg font-semibold rounded-md text-white lg:mt-5 mt-3"
-          style={{
-            background: "linear-gradient(90deg, #092880 0%, #03051B 100%)",
-          }}
-          onClick={() => navigate("/contact")}
-        >
-          Связаться с нами
-        </button>
-      </div>
+      {/* Button */}
+      <HelpBtn />
     </div>
   );
 };

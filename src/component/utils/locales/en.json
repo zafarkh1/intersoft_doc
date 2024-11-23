@@ -6,6 +6,63 @@
         "uz": "Uzbek",
         "ru": "Russian"
       }
-    }
+    },
+      "search": {
+        "heading": "How can we help you?",
+        "placeholder": "Enter a question, topic, or issue",
+        "popularQuestions": "Popular questions:"
+      },
+      "accordion": {
+    "topicArticles": "Articles on the topic",
+    "helpNeeded": "Need more help?",
+    "contactUs": "Contact us"
+  },
+  "footer": {
+    "rightsReserved": "© Intersoft 2024. All rights reserved",
+    "privacyPolicy": "Privacy Policy",
+    "userAgreement": "User Agreement"
+  },
+  "answer" : {
+    "homePage": "Home Page",
+    "publishedDate": "Published Date",
+    "relatedQuestions": "Related Questions",
+    "unsupportedEmbed": "Unsupported embed format."
+  },
+  "help": {
+    "needHelp": "Need additional help?",
+    "contactUs": "Contact Us"
+  },
+  "choose": {
+    "chooseCompany": "Choose a company"
+  },
+  "contact": {
+    "home": "Home",
+    "feedback": "Feedback",
+    "welcome": "Welcome!",
+    "contactDescription": "You can submit your application, and our specialists will definitely help you."
+  },
+  "form": {
+    "subject": "Subject",
+    "selectTopic": "Select a topic",
+    "testOption": "Test",
+    "comment": "Comment",
+    "describeQuestion": "Please describe your question in detail",
+    "emailDescription": "So we can notify you about the application status, and you can contact us for any questions regarding your request",
+    "phoneNumber": "Phone number",
+    "phoneDescription": "So we can contact you quickly if there are issues with the email",
+    "categoryError": "Please select a category.",
+    "descriptionError": "Please select a topic.",
+    "emailError": "We'll use your email to contact you.",
+    "invalidEmail": "Please enter a valid email address.",
+    "phoneError": "Provide your phone number for further assistance.",
+    "successMessage": "Form submitted successfully!",
+    "errorMessage": "An error occurred. Please try again.",
+    "submit": "Submit"
+  },
+  "contactModal": {
+   "applicationAccepted": "Application Accepted",
+    "applicationMessage": "Your application has been received! We promise it won't be lost, and we'll respond to the email you provided within 24 hours.",
+    "resend": "Resend"
+  }
   }
   

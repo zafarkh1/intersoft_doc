@@ -475,7 +475,7 @@ export const IconDropdownTopLarge = ({
 
 export const IconClose = ({
   className,
-  color = "#242222",
+  color = "white",
   weight = 2,
   ...props
 }: IconProps): JSX.Element => (
@@ -488,7 +488,7 @@ export const IconClose = ({
     strokeWidth={weight}
     {...props}
   >
-    <path d="M18 6L6 18M6 6L18 18" stroke="black" />
+    <path d="M18 6L6 18M6 6L18 18" />
   </svg>
 );
 
@@ -637,5 +637,68 @@ export const IconCategory = ({
       strokeLinecap="round"
       strokeLinejoin="round"
     />
+  </svg>
+);
+
+export const IconAcceptApplication = ({
+  className,
+  color = "#242222",
+  weight = 2,
+  ...props
+}: IconProps) => (
+  <svg
+    viewBox="0 0 77 78"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    stroke={color}
+    strokeWidth={weight}
+    {...props}
+  >
+    <path
+      d="M73.5 35.8V39.02C73.4957 46.5675 71.0518 53.9114 66.5327 59.9564C62.0136 66.0014 55.6615 70.4237 48.4237 72.5637C41.186 74.7037 33.4504 74.4467 26.3706 71.8311C19.2909 69.2155 13.2463 64.3814 9.13836 58.0498C5.03043 51.7182 3.07927 44.2283 3.57587 36.6971C4.07247 29.166 6.99022 21.9972 11.894 16.2598C16.7977 10.5224 23.4247 6.52387 30.7867 4.86054C38.1486 3.19722 45.8509 3.95821 52.745 7.03003M73.5 11L38.5 46.035L28 35.535"
+      stroke="#2DA771"
+      strokeWidth="7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const IconAgain = ({
+  className,
+  color = "#242222",
+  weight = 2,
+  ...props
+}: IconProps) => (
+  <svg
+    viewBox="0 0 21 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    stroke={color}
+    strokeWidth={weight}
+    {...props}
+  >
+    <path
+      d="M1 8C1 8 3.00498 5.26822 4.63384 3.63824C6.26269 2.00827 8.5136 1 11 1C15.9706 1 20 5.02944 20 10C20 14.9706 15.9706 19 11 19C6.89691 19 3.43511 16.2543 2.35177 12.5M1 8V2M1 8H7"
+      stroke="url(#paint0_linear_1_2581)"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_1_2581"
+        x1="10.5"
+        y1="1"
+        x2="10.5"
+        y2="19"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#092880" />
+        <stop offset="1" stopColor="#03051B" />
+      </linearGradient>
+    </defs>
   </svg>
 );

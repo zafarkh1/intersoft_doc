@@ -6,7 +6,7 @@ const Layout = () => {
   return (
     <div>
       <Header />
-      <main className="myContainer">
+      <main className="myContainer min-h-[600px]">
         <Outlet />
       </main>
       <Footer />

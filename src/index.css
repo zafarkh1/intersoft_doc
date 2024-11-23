@@ -48,7 +48,6 @@ body {
   gap: 0.5rem;
   background-color: #fafafa;
   padding: 0.5rem 1rem;
-  border-radius: 0.75rem;
   border: 1px solid #f0f0f0;
 }
 
@@ -101,4 +100,14 @@ body {
 .custom-checklist .checklist-item.checked span {
   text-decoration: line-through;
   color: #777;
+}
+
+.calc-Helpwidth {
+  width: calc(100% - 380px);
+}
+
+@media screen and (max-width: 724px) {
+  .calc-Helpwidth {
+    width: 100%;
+  }
 }

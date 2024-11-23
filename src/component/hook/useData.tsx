@@ -18,16 +18,16 @@ interface AccordionType {
 }
 
 // Question Detail Interfaces
-interface BlockDataType {
-  text: string;
-  level: number;
-}
+// interface BlockDataType {
+//   text: string;
+//   level: number;
+// }
 
-interface BlockType {
-  id: string;
-  data: BlockDataType;
-  type: string;
-}
+// interface BlockType {
+//   id: string;
+//   data: BlockDataType;
+//   type: string;
+// }
 
 interface QuestionDetailType {
   id: number;
@@ -60,6 +60,9 @@ const useData = ({ slug }: { slug: string }) => {
   const [questionDetail, setQuestionDetail] =
     useState<QuestionDetailType | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [currentLang, setCurrentLang] = useState<string>(
+    localStorage.getItem("i18nextLng") || "en"
+  );
 
   const navigate = useNavigate();
 
@@ -79,7 +82,7 @@ const useData = ({ slug }: { slug: string }) => {
         // Fetch Category
         try {
           const categoryResponse = await axios.get(
-            "http://192.168.31.247:8002/ru/api/v1/intersoft/projects/",
+            `http://192.168.31.247:8002/${currentLang}/api/v1/intersoft/projects/`,
             {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -104,7 +107,7 @@ const useData = ({ slug }: { slug: string }) => {
         // Fetch Accordion Questions
         try {
           const accordionResponse = await axios.get(
-            `http://192.168.31.247:8002/ru/api/v1/intersoft/projects/${cleanedProject}/question-category`,
+            `http://192.168.31.247:8002/${currentLang}/api/v1/intersoft/projects/${cleanedProject}/question-category`,
             {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -121,7 +124,7 @@ const useData = ({ slug }: { slug: string }) => {
         if (slug) {
           try {
             const detailResponse = await axios.get(
-              `http://192.168.31.247:8002/ru/api/v1/intersoft/projects/${cleanedProject}/questions/${slug}/`,
+              `http://192.168.31.247:8002/${currentLang}/api/v1/intersoft/projects/${cleanedProject}/questions/${slug}/`,
               {
                 headers: {
                   Authorization: `Bearer ${accessToken}`,
@@ -139,7 +142,23 @@ const useData = ({ slug }: { slug: string }) => {
     };
 
     fetchData();
-  }, [slug, navigate]);
+  }, [slug, navigate, currentLang]);
+
+  // Listen for language change in localStorage
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const newLang = localStorage.getItem("i18nextLng");
+      if (newLang && newLang !== currentLang) {
+        setCurrentLang(newLang);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [currentLang]);
 
   return { accordionQuestions, questionDetail, projects };
 };

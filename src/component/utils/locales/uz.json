@@ -6,6 +6,63 @@
         "uz": "O‘zbekcha",
         "ru": "Ruscha"
       }
-    }
+    },
+      "search": {
+    "heading": "Sizga qanday yordam bera olamiz?",
+    "placeholder": "Savol, mavzu yoki muammoni kiriting",
+    "popularQuestions": "Ommabop savollar:"
+  },
+  "accordion": {
+    "topicArticles": "Mavzu bo'yicha maqolalar",
+    "helpNeeded": "Qo'shimcha yordam kerakmi?",
+    "contactUs": "Biz bilan bog'laning"
+  },
+  "footer": {
+    "rightsReserved": "© Intersoft 2024. Barcha huquqlar himoyalangan",
+    "privacyPolicy": "Maxfiylik siyosati",
+    "userAgreement": "Foydalanuvchi shartnomasi"
+  },
+  "answer": {
+    "homePage": "Bosh sahifa",
+    "publishedDate": "Chop etilgan sana",
+    "relatedQuestions": "Mavzu bo‘yicha boshqa savollar",
+    "unsupportedEmbed": "Qo‘llab-quvvatlanmaydigan qo‘shish formati."
+  },
+  "help": {
+    "needHelp": "Qo'shimcha yordam kerakmi?",
+  "contactUs": "Biz bilan bog'laning"
+  },
+  "choose": {
+    "chooseCompany": "Kompaniya tanlang"
+  },
+  "contact": {
+    "home": "Bosh sahifa",
+    "feedback": "Aloqa",
+    "welcome": "Xush kelibsiz!",
+    "contactDescription": "Arizangizni yuborishingiz mumkin, mutaxassislarimiz sizga albatta yordam beradi."
+  },
+"form": {
+  "subject": "Mavzu",
+  "selectTopic": "Mavzuni tanlang",
+  "testOption": "Sinov",
+  "comment": "Izoh",
+  "describeQuestion": "Savolingizni iltimos, batafsil ta'riflang",
+  "emailDescription": "Arizangizning holati haqida xabar berishimiz va siz bizga murojaat qilishingiz mumkin bo'ladi",
+  "phoneNumber": "Telefon raqami",
+  "phoneDescription": "Agar pochada muammolar bo'lsa, biz siz bilan tezkor aloqaga chiqishimiz uchun",
+  "categoryError": "Kategoriyani tanlang",
+  "descriptionError": "Izohni kiriting",
+  "emailError": "Biz siz bilan bog‘lanish uchun emailingizdan foydalanamiz.",
+  "invalidEmail": "Iltimos, haqiqiy elektron pochta manzilini kiriting.",
+    "phoneError": "Qo‘shimcha yordam uchun telefon raqamingizni ko‘rsating.",
+    "successMessage": "Forma muvaffaqiyatli yuborildi!",
+    "errorMessage": "Xatolik yuz berdi. Qayta urinib ko‘ring.",
+  "submit": "Yuborish"
+  },
+  "contactModal": {
+   "applicationAccepted": "Ariza qabul qilindi",
+  "applicationMessage": "Arizangiz qabul qilindi! Biz sizga 24 soat ichida ko'rsatilgan elektron pochta manzilingizga javob beramiz.",
+  "resend": "Yana yuborish"
+  }
   }
   
