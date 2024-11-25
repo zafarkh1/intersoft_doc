@@ -47,6 +47,7 @@ const Footer = () => {
                 to={item.link}
                 key={item.id}
                 className="md:p-4 p-[10px] border border-[#F1F3F5] rounded-full"
+                target="_blank"
               >
                 {item.icon}
               </Link>

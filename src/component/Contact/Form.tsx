@@ -20,7 +20,7 @@ const Form = () => {
   const [currentLang, setCurrentLang] = useState<string>(
     localStorage.getItem("i18nextLng") || "en"
   );
-  const { onOpen, isOpen } = useFormModalStore();
+  const { onOpen } = useFormModalStore();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -186,7 +186,7 @@ const Form = () => {
         {descriptionError && <p className="text-red-500">{descriptionError}</p>}
       </div>
 
-      <div className="flex md:flex-row flex-col md:items-center md:justify-between md:gap-24 gap-4">
+      <div className="flex md:flex-row flex-col md:justify-between md:gap-24 gap-4">
         <div className="md:w-1/2 w-full">
           <label htmlFor="email" className="text-xl">
             E-mail*
@@ -219,7 +219,7 @@ const Form = () => {
               paddingBlock: "16px",
             }}
             inputStyle={{
-              fontSize: "1.25em",
+              // fontSize: "1.25em",
               height: "100%",
               outline: "none",
               border: "none",
@@ -235,6 +235,8 @@ const Form = () => {
               background: "none",
               cursor: "default",
             }}
+            containerClass="phone-container"
+            inputClass="phone-input"
             country={"uz"}
             value={phone}
             onChange={(phone) => setPhone(phone)}

@@ -11,8 +11,8 @@ import Logo from "../assets/images/logo_navbar.png";
 import Profile from "../assets/images/Avatars.svg";
 import { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
-import useData from "./hook/useData";
 import { useTranslation } from "react-i18next";
+import { useProjects } from "./hook/useGetData";
 
 const Header = () => {
   const { i18n, t } = useTranslation();
@@ -34,7 +34,7 @@ const Header = () => {
     { code: "ru", label: t("header.languages.ru") || "Russian" },
   ];
 
-  const { projects } = useData({ slug: "" });
+  const { isLoading: isProjectsLoading, data: projects } = useProjects();
   const navigate = useNavigate();
 
   // Close dropdown on outside click
@@ -97,13 +97,6 @@ const Header = () => {
     navigate("/login");
   };
 
-  // const handleLanguageChange = (lang: string) => {
-  //   i18n.changeLanguage(lang);
-  //   setCurrentLang(lang);
-  //   localStorage.setItem("i18nextLng", lang);
-  //   setIsLangDropdownOpen(false);
-  // };
-
   const handleLanguageChange = (lang: string) => {
     i18n
       .changeLanguage(lang)
@@ -125,18 +118,25 @@ const Header = () => {
 
         <div className="relative" ref={languageDropdownRef}>
           <button
-            className="md:flex items-center hidden px-4 py-2 border rounded-md bg-gray-100"
+            className="md:flex items-center hidden px-4 py-2 border rounded-md bg-gray-100 w-[160px] justify-between"
             onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
           >
             <IconLanguage className="mr-2 size-4" />
-            <span>
+            <span className="truncate">
               {languages.find((lang) => lang.code === currentLang)?.label}
             </span>
             <IconDropdownDownSmall className="ml-2 size-3 fill-primary" />
           </button>
 
+          <div
+            className="md:hidden"
+            onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+          >
+            <IconLanguageMobile className="size-7" />
+          </div>
+
           {isLangDropdownOpen && (
-            <ul className="absolute md:left-10 left-0 top-[37px] mt-2 md:text-base text-xs bg-white border border-[#EAEAEB] rounded-md shadow-md z-10">
+            <ul className="absolute md:left-4 left-0 right-0 top-[37px] mt-2 md:text-base text-xs bg-white border border-[#EAEAEB] rounded-md shadow-md z-10">
               {languages.map((lang) => (
                 <li
                   key={lang.code}
@@ -153,22 +153,19 @@ const Header = () => {
               ))}
             </ul>
           )}
-
-          <div
-            className="md:hidden inline-block"
-            onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-          >
-            <IconLanguageMobile className="size-8" />
-          </div>
         </div>
 
         {/* Logo */}
         <a
           href="/"
-          className="flex-shrink-0 mx-auto text-center flex-1 lg:flex-none lg:mx-0"
+          className="flex-shrink-0 mx-auto text-center flex-1 lg:flex-none w-[160px] md:h-[50px]"
         >
-          <img src={Logo} alt="logo" className="md:inline-block hidden" />
-          <IconIntersoft className="md:hidden inline-block size-8 fill-[linear-gradient(90deg, #092880 0%, #03051B 100%)]" />
+          <img
+            src={Logo}
+            alt="logo"
+            className="md:inline-block hidden w-full h-full object-contain"
+          />
+          <IconIntersoft className="md:hidden inline-block size-10 fill-[linear-gradient(90deg, #092880 0%, #03051B 100%)]" />
         </a>
 
         <div className="flexICenter md:gap-1 gap-4">
@@ -184,8 +181,9 @@ const Header = () => {
               >
                 <span>
                   {
-                    projects.find((project) => project.slug === selectedProject)
-                      ?.name
+                    projects?.find(
+                      (project) => project.slug === selectedProject
+                    )?.name
                   }
                 </span>
                 <IconDropdownDownSmall className="size-3 fill-primary" />
@@ -201,8 +199,8 @@ const Header = () => {
             </div>
 
             {isDropdownOpen && (
-              <ul className="bg-white border border-[#E4E4E4] md:text-base text-xs rounded-md absolute md:top-14 top-10 md:-left-ful">
-                {projects.map((project) => (
+              <ul className="bg-white border border-[#E4E4E4] md:text-base text-xs rounded-md absolute md:top-14 top-10">
+                {projects?.map((project) => (
                   <li
                     key={project.id}
                     className="md:py-[10px] py-2 md:px-4 px-2 hover:bg-[#f5f5f5] flexBetween gap-3 cursor-pointer"

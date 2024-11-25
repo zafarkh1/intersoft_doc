@@ -1,14 +1,14 @@
 import { Link, useParams } from "react-router-dom";
-import useData from "../hook/useData";
 import { useTranslation } from "react-i18next";
+import { useQuestions } from "../hook/useGetData";
 
 const RelatedQuestions = () => {
   const { slug } = useParams();
-  const { accordionQuestions } = useData({ slug: slug || "" });
+  const { isLoading: isQuestionsLoading, data: questions } = useQuestions();
   const { t } = useTranslation();
 
   const relatedQuestions =
-    accordionQuestions.find((accordion) =>
+    questions?.find((accordion) =>
       accordion.filtered_questions.some((fq) => fq.slug === slug)
     )?.filtered_questions || [];
 

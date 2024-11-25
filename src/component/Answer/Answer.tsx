@@ -9,18 +9,22 @@ import {
   customVideoParser,
   customHeadingParser,
 } from "../utils/parsers";
-import useData from "../hook/useData";
 import Help from "./Help";
 import RelatedQuestions from "./RelatedQuestions";
 import { useTranslation } from "react-i18next";
+import { useQuestionDetail, useQuestions } from "../hook/useGetData";
 
 const Answer = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { accordionQuestions, questionDetail } = useData({ slug: slug || "" });
+  const { isLoading: isQuestionsLoading, data: questions } = useQuestions();
+  const { isLoading: isQuestionDetailLoading, data: questionDetail } =
+    useQuestionDetail({
+      slug: slug || "",
+    });
 
-  const currentCategory = accordionQuestions.find((accordion) =>
+  const currentCategory = questions?.find((accordion) =>
     accordion.filtered_questions.some((fq) => fq.slug === slug)
   );
 

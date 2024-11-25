@@ -6,7 +6,7 @@ interface LangStore {
 }
 
 export const useLangStore = create<LangStore>((set) => ({
-  currentLanguage: localStorage.getItem("i18nextLng"),
+  currentLanguage: localStorage.getItem("i18nextLng") || "en",
 
   setCurrentLanguage: (language: string) => set({ currentLanguage: language }),
 }));

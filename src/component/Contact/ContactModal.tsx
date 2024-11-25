@@ -8,7 +8,7 @@ import { useFormModalStore } from "../hook/useFormModalStore";
 import { useTranslation } from "react-i18next";
 
 const ContactModal = () => {
-  const { onClose, isOpen, onOpen } = useFormModalStore();
+  const { onClose } = useFormModalStore();
   const { t } = useTranslation();
 
   const handleClickOutside = (e: MouseEvent<HTMLDivElement>) => {

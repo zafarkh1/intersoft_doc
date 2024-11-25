@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 const Contact = () => {
   const navigate = useNavigate();
-  const { onClose, isOpen, onOpen } = useFormModalStore();
+  const { isOpen } = useFormModalStore();
   const { t } = useTranslation();
 
   return (

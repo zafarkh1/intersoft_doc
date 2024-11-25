@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import useData from "../component/hook/useData";
 import { useTranslation } from "react-i18next";
+import { useProjects } from "../component/hook/useGetData";
 
 const Choose = () => {
-  const { projects } = useData({ slug: "" });
+  const { isLoading: isProjectsLoading, data: projects } = useProjects();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -27,7 +27,7 @@ const Choose = () => {
             <img
               src={project.picture.large}
               alt={project.name}
-              className="w-80 h-44 rounded-xl"
+              className="w-80 md:h-44 h-32 rounded-xl"
             />
           </div>
         ))}

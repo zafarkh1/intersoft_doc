@@ -6,14 +6,14 @@ import {
   IconDropdownBottomLarge,
   IconDropdownTopLarge,
 } from "../../assets/icons/icons";
-import useData from "../hook/useData";
 import HelpBtn from "./HelpBtn";
 import AccordionHeading from "./AccordionHeading";
+import { useQuestions } from "../hook/useGetData";
 
 const MyAccordion = () => {
   const [expandedPanels, setExpandedPanels] = useState<number[]>([]);
   const navigate = useNavigate();
-  const { accordionQuestions } = useData({ slug: "" });
+  const { isLoading: isQuestionsLoading, data: questions } = useQuestions();
 
   const handleToggle = (panel: number) => {
     setExpandedPanels(
@@ -31,7 +31,7 @@ const MyAccordion = () => {
 
       {/* Accordion */}
       <div className="lg:w-[900px] rounded-xl border border-[#EAECF0] lg:my-16 mt-8 mb-10 font-semibold overflow-hidden">
-        {accordionQuestions?.map((item) => (
+        {questions?.map((item) => (
           <Accordion
             key={item.id}
             expanded={expandedPanels.includes(item.id)}
